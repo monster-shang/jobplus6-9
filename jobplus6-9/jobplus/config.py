@@ -7,6 +7,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = 'mysql+mysqldb://root@localhost:3306/jobplus?charset=utf8'
 
+
 class ProductionConfig(BaseConfig):
     """生产环境配置"""
     pass
