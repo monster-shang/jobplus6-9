@@ -1,0 +1,8 @@
+#依赖包
+
+flask
+flask-sqlalchemy
+mysqlsqlclient
+flask-migrate
+flask-wtf
+flask-login
