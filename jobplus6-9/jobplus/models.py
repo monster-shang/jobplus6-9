@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash,generate_password_hash
+
 db = SQLAlchemy()
 
 class Base(db.Model):
@@ -65,12 +66,17 @@ class Company(Base):
 	contact = db.Column(db.String(24),nullable=False)
 	email = db.Column(db.String(24),nullable=False)
 	location = db.Column(db.String(24),nullable=False)
-
+	#描述
 	description = db.Column(db.String(100))
+	#关于
 	about = db.Column(db.String(1024))
+	#公司标签
 	tags = db.Column(db.String(128))
+	#公司技术栈
 	stack = db.Column(db.String(128))
+	#团队介绍
 	team_introduction = db.Column(db.String(256))
+	#福利，多个福利用分号隔开，最多10个
 	welfares = db.Column(db.String(256))
 	user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete = 'SET NULL'))
 	user = db.relationship('User',uselist = False,backref = db.backref('company',uselist=False))
@@ -83,13 +89,16 @@ class Job(Base):
 
 	id = db.Column(db.Integer,primary_key=True)
 	name = db.Column(db.String(24),nullable=False)
+	#工资范围
 	salary_low = db.Column(db.Integer,nullable=False)
 	salary_high = db.Column(db.Integer,nullable=False)
 	location = db.Column(db.String(24))
+	#职位标签，多个标签用逗号隔开，最多10个
 	tags = db.Column(db.String(128))
 	experience_requirement = db.Column(db.String(32))
 	degree_requirement = db.Column(db.String(32))
 	is_fulltime = db.Column(db.Boolean,default = True)
+	#是否在招聘
 	is_open = db.Column(db.Boolean,default=True)
 	company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
 	company = db.relationship('Company',uselist= False)
@@ -100,9 +109,11 @@ class Job(Base):
 
 class Dilivery(Base):
 	__tablename__ = 'delivery'
-
+	#等待企业审核
 	STATUS_WAITING = 1
+	#被拒绝
 	STATUS_REJECT = 2
+	#被接收，等待通知面试
 	STATUS_ACCEPT = 3
 
 	id = db.Column(db.Integer,primary_key=True)
